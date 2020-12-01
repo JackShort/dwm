@@ -1463,8 +1463,10 @@ run(void)
 
 void
 runAutostart(void) {
-	system("cd ~/.dwm; ./autostart_blocking.sh");
-	system("cd ~/.dwm; ./autostart.sh &");
+	int systemRet = system("cd ~/.dwm; ./autostart.sh");
+	if (systemRet == -1) {
+	    ;
+	}
 }
 
 void
