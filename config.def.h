@@ -108,7 +108,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
+	{ MODKEY,			XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[6]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
