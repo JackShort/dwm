@@ -118,7 +118,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,			XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[7]} }, /* float */
+	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[7]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
 	/*{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, centeredmaster floating*/
@@ -128,6 +128,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,	   togglesticky,   {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_f,      togglefullscreen, {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefakefullscreen, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
