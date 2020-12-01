@@ -10,7 +10,7 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static int attachbelow		    = 1;	/* 1 means attach after the currently active winow */
 
@@ -67,6 +67,8 @@ static const Layout layouts[] = {
  	{ "[@]",      spiral }, /* fib */
  	{ "[\\]",      dwindle }, /* reverse fib */
 
+ 	{ "[DD]",      doubledeck }, /* double deck */
+
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
 
@@ -93,6 +95,12 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *volumeup[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *volumedown[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *mutevolume[]  = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *pausetrack[]  = { "playerctl", "play-pause", NULL };
+static const char *nexttrack[]  = { "playerctl", "next", NULL };
+static const char *prevtrack[]  = { "playerctl", "previous", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -110,12 +118,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,			XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[6]} }, /* float */
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[7]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
-	{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, /* centeredmaster floating*/
+	/*{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, centeredmaster floating*/
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} }, /* spiral */
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[5]} }, /* dwindle */
+	{ MODKEY,			XK_d,      setlayout,      {.v = &layouts[6]} }, /* doubledeck */
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -134,6 +143,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
+	{ MODKEY,                       XK_equal,   spawn,          {.v = volumeup } },
+	{ MODKEY,                       XK_minus,   spawn,          {.v = volumedown } },
+	{ MODKEY,                       XK_backslash,   spawn,      {.v = mutevolume } },
+	{ MODKEY|ShiftMask,             XK_i,	    spawn,	    {.v = pausetrack } },
+	{ MODKEY,			XK_u,	    spawn,	    {.v = nexttrack } },
+	{ MODKEY|ShiftMask,             XK_u,	    spawn,	    {.v = prevtrack } },
 };
 
 /* button definitions */
