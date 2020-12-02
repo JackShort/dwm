@@ -104,6 +104,7 @@ static const char *nexttrack[]  = { "playerctl", "next", NULL };
 static const char *prevtrack[]  = { "playerctl", "previous", NULL };
 static const char *openchrome[]  = { "chromium", NULL };
 static const char *openspotify[]  = { "spotify", NULL };
+static const char *openemacs[]  = { "emacs", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -153,10 +154,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,   spawn,          {.v = volumedown } },
 	{ MODKEY,                       XK_backslash,   spawn,      {.v = mutevolume } },
 	{ MODKEY|ShiftMask,             XK_i,	    spawn,	    {.v = pausetrack } },
-	{ MODKEY,			XK_u,	    spawn,	    {.v = nexttrack } },
+	{ MODKEY,			            XK_u,	    spawn,	    {.v = nexttrack } },
 	{ MODKEY|ShiftMask,             XK_u,	    spawn,	    {.v = prevtrack } },
-	{ MODKEY,			XK_w,	    spawn,	    {.v = openchrome } },
+	{ MODKEY,			            XK_w,	    spawn,	    {.v = openchrome } },
 	{ MODKEY|ShiftMask,             XK_w,	    spawn,	    {.v = openspotify } },
+	{ MODKEY|ShiftMask,             XK_e,	    spawn,	    {.v = openemacs } },
 };
 
 /* button definitions */
