@@ -58,7 +58,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	/*{ "[]=",      tile },*/    /* first entry is default */
+ 	{ "[|||]",    col }, /* col */
 
 	{ "[M]",      monocle }, /* All windows on top of each other */
 
@@ -66,9 +67,9 @@ static const Layout layouts[] = {
 	{ ">M>",      centeredfloatingmaster }, /* Same but master floats*/
 
  	{ "[@]",      spiral }, /* fib */
- 	{ "[\\]",      dwindle }, /* reverse fib */
+ 	{ "[\\]",     dwindle }, /* reverse fib */
 
- 	{ "[DD]",      doubledeck }, /* double deck */
+ 	{ "[DD]",     doubledeck }, /* double deck */
 
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };

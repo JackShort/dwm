@@ -1,53 +1,42 @@
 diff a/dwm.c b/dwm.c	(rejected hunks)
-@@ -52,8 +52,8 @@
- #define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]))
- #define LENGTH(X)               (sizeof X / sizeof X[0])
- #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
--#define WIDTH(X)                ((X)->w + 2 * (X)->bw)
--#define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
-+#define WIDTH(X)                ((X)->w + 2 * (X)->bw + gappx)
-+#define HEIGHT(X)               ((X)->h + 2 * (X)->bw + gappx)
- #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
- #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+@@ -167,6 +167,7 @@ static void cleanup(void);
+ static void cleanupmon(Monitor *mon);
+ static void clearurgent(Client *c);
+ static void clientmessage(XEvent *e);
++static void col(Monitor *);
+ static void configure(Client *c);
+ static void configurenotify(XEvent *e);
+ static void configurerequest(XEvent *e);
+@@ -1702,6 +1703,32 @@ textnw(const char *text, unsigned int le
+ }
  
-@@ -1277,12 +1277,36 @@ void
- resizeclient(Client *c, int x, int y, int w, int h)
- {
- 	XWindowChanges wc;
-+	unsigned int n;
-+	unsigned int gapoffset;
-+	unsigned int gapincr;
-+	Client *nbc;
- 
--	c->oldx = c->x; c->x = wc.x = x;
--	c->oldy = c->y; c->y = wc.y = y;
--	c->oldw = c->w; c->w = wc.width = w;
--	c->oldh = c->h; c->h = wc.height = h;
- 	wc.border_width = c->bw;
+ void
++col(Monitor *m) {
++	unsigned int i, n, h, w, x, y,mw;
++	Client *c;
 +
-+	/* Get number of clients for the client's monitor */
-+	for (n = 0, nbc = nexttiled(c->mon->clients); nbc; nbc = nexttiled(nbc->next), n++);
-+
-+	/* Do nothing if layout is floating */
-+	if (c->isfloating || c->mon->lt[c->mon->sellt]->arrange == NULL) {
-+		gapincr = gapoffset = 0;
-+	} else {
-+		/* Remove border and gap if layout is monocle or only one client */
-+		if (c->mon->lt[c->mon->sellt]->arrange == monocle || n == 1) {
-+			gapoffset = 0;
-+			gapincr = -2 * borderpx;
-+			wc.border_width = 0;
-+		} else {
-+			gapoffset = gappx;
-+			gapincr = 2 * gappx;
++	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
++	if(n == 0)
++		return;
++        if(n > m->nmaster)
++                mw = m->nmaster ? m->ww * m->mfact : 0;
++        else
++                mw = m->ww;
++	for(i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
++		if(i < m->nmaster) {
++			 w = (mw - x) / (MIN(n, m->nmaster)-i);
++                         resize(c, x + m->wx, m->wy, w - (2*c->bw), m->wh - (2*c->bw), False);
++			x += WIDTH(c);
++		}
++		else {
++			h = (m->wh - y) / (n - i);
++			resize(c, x + m->wx, m->wy + y, m->ww - x  - (2*c->bw), h - (2*c->bw), False);
++			y += HEIGHT(c);
 +		}
 +	}
++}
 +
-+	c->oldx = c->x; c->x = wc.x = x + gapoffset;
-+	c->oldy = c->y; c->y = wc.y = y + gapoffset;
-+	c->oldw = c->w; c->w = wc.width = w - gapincr;
-+	c->oldh = c->h; c->h = wc.height = h - gapincr;
-+
- 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
- 	configure(c);
- 	XSync(dpy, False);
++void
+ tile(Monitor *m) {
+ 	unsigned int i, n, h, mw, my, ty;
+ 	Client *c;
