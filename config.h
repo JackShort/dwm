@@ -8,8 +8,8 @@
 */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 2;        /* gaps between windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -33,7 +33,7 @@ static const char col3[]   = "#EDA685";
 static const char col4[]   = "#00A5AF";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm]     = { fore,      back,      back   }, // \x0b
+	[SchemeNorm]     = { fore,      back,      border   }, // \x0b
 	[SchemeSel]      = { fore,      back,      col4   }, // \x0c
 };
 
@@ -50,9 +50,9 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.67; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 #include "fibonacci.c"
 
@@ -70,6 +70,7 @@ static const Layout layouts[] = {
  	{ "[\\]",     dwindle }, /* reverse fib */
 
  	{ "[DD]",     doubledeck }, /* double deck */
+ 	{ "[3]",      thirds }, /* double deck */
 
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -123,13 +124,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,			XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
-	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[7]} }, /* float */
+	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[8]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
 	/*{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, centeredmaster floating*/
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} }, /* spiral */
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[5]} }, /* dwindle */
-	{ MODKEY,			XK_d,      setlayout,      {.v = &layouts[6]} }, /* doubledeck */
+	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[7]} }, /* thirds */
+	{ MODKEY|ShiftMask,             XK_d,      setlayout,      {.v = &layouts[6]} }, /* double decker */
 	{ MODKEY,                       XK_s,	   togglesticky,   {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },

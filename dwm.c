@@ -226,6 +226,7 @@ static int stackpos(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 /*static void tile(Monitor *);*/
+static void thirds(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefakefullscreen(const Arg *arg);
 static void togglefloating(const Arg *arg);
@@ -1963,6 +1964,51 @@ tile(Monitor *m)
 		}
 }
 */
+
+void
+thirds(Monitor *m)
+{
+	unsigned int i, n, mw, my, h, ty;
+	Client *c;
+
+	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if(n == 0)
+		return;
+
+	if(n > m->nmaster)
+		mw = m->nmaster ? m->ww * m->mfact : 0;
+	else
+		mw = m->ww;
+
+	for(i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		if (i < m->nmaster) {
+			if (m->nmaster == 1 || (n == 1)) {
+				h = (m->wh - my);
+				resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
+				my = 0;
+			} else if (i == 0) {
+				h = (m->wh - my) / 3;
+				resize(c, m->wx, m->wy + my, mw - (2*c->bw), (2 * h) - (2*c->bw), 0);
+				my += HEIGHT(c);
+			} else {
+				h = (m->wh - my);
+				resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
+			}
+		} else {
+			if (n - m->nmaster == 1) {
+				h = (m->wh - ty);
+				resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
+				ty = 0;
+			} else if ((i - m->nmaster) == 0) {
+				h = (m->wh - ty) / 3;
+				resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), (2 * h) - (2*c->bw), 0);
+				ty += HEIGHT(c);
+			} else {
+				h = (m->wh - ty);
+				resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
+			}
+		}
+}
 
 void
 togglebar(const Arg *arg)
