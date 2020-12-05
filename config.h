@@ -59,7 +59,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	/*{ "[]=",      tile },*/    /* first entry is default */
- 	{ "[|||]",    col }, /* col */
+ 	{ "[3]",      thirds }, /* double deck */
 
 	{ "[M]",      monocle }, /* All windows on top of each other */
 
@@ -70,7 +70,7 @@ static const Layout layouts[] = {
  	{ "[\\]",     dwindle }, /* reverse fib */
 
  	{ "[DD]",     doubledeck }, /* double deck */
- 	{ "[3]",      thirds }, /* double deck */
+ 	{ "[|||]",    col }, /* col */
 
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -123,14 +123,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,			XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* thirds */
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[8]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
 	/*{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, centeredmaster floating*/
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} }, /* spiral */
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[5]} }, /* dwindle */
-	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[7]} }, /* thirds */
+	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[7]} }, /* tile */
 	{ MODKEY|ShiftMask,             XK_d,      setlayout,      {.v = &layouts[6]} }, /* double decker */
 	{ MODKEY,                       XK_s,	   togglesticky,   {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
