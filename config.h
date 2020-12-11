@@ -31,10 +31,15 @@ static const char col1[]   = "#E4436F";
 static const char col2[]   = "#24E39D";
 static const char col3[]   = "#EDA685";
 static const char col4[]   = "#00A5AF";
+
+static const char nordFG[] = "#3B4252";
+static const char nordBG[] = "#FFFFFF";
+static const char nordBorderUnselected[] = "#4C566A";
+static const char nordBorderSelected[] = "#5E81AC";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm]     = { fore,      back,      border   }, // \x0b
-	[SchemeSel]      = { fore,      back,      col4   }, // \x0c
+	[SchemeNorm]     = { fore,      back,      nordBorderUnselected   }, // \x0b
+	[SchemeSel]      = { fore,      back,      nordBorderSelected   }, // \x0c
 };
 
 /* tagging */
@@ -97,6 +102,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", back, "-nf", col4, "-sb", col1, "-sf", back, NULL };
+static const char *roficmd[] = { "rofi", "-show", "drun", NULL};
+static const char *rofiwindowcmd[] = { "rofi", "-show", "window", NULL};
 static const char *termcmd[]  = { "st", NULL };
 static const char *volumeup[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *volumedown[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
@@ -112,7 +119,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = rofiwindowcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_Tab,    toggleAttachBelow,      {0} },
