@@ -47,7 +47,8 @@ command.
 .TP
 .B Button1
 click on a tag label to display all windows with that tag, click on the layout
-label toggles between tiled and floating layout.
+label toggles between tiled and floating layout, click on a window name in the
+tab bar brings focus to that window.
 .TP
 .B Button3
 click on a tag label adds/removes all windows with that tag to/from the view.
@@ -112,6 +113,12 @@ Increase master area size.
 .TP
 .B Mod1\-h
 Decrease master area size.
+.TP
+.B Mod1\-w
+Cycle over the tab bar display modes: never displayed, always displayed,
+displayed only in monocle mode when the view contains more than one window (auto
+mode). Some display modes can be disabled in the configuration, config.h. In
+the default configuration only "never" and "auto" display modes are enabled.
 .TP
 .B Mod1\-Return
 Zooms/cycles focused window to/from master area (tiled layouts only).

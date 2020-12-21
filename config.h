@@ -16,6 +16,13 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static int attachbelow		        = 1;	/* 1 means attach after the currently active winow */
 static const int rmaster            = 1;        /* 1 means master-area is initially on the right */
 
+/*  Display modes of the tab bar: never shown, always shown, shown only in  */
+/*  monocle mode in the presence of several windows.                        */
+/*  Modes after showtab_nmodes are disabled.                                */
+enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
+static const int showtab			= showtab_auto;        /* Default tab bar show mode */
+static const int toptab				= False;               /* False means bottom tab bar */
+
 static const char *fonts[]          = { "Fira Code:size=11" };
 static const char dmenufont[]       = "Fira Code:size=11";
 
@@ -34,8 +41,7 @@ static const char col3[]   = "#EDA685";
 static const char col4[]   = "#00A5AF";
 
 static const char nordFG[] = "#3B4252";
-static const char nordBG[] = "#FFFFFF";
-static const char nordBorderUnselected[] = "#4C566A";
+static const char nordBG[] = "#FFFFFF"; static const char nordBorderUnselected[] = "#4C566A";
 static const char nordBorderSelected[] = "#5E81AC";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -65,9 +71,8 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	/*{ "[]=",      tile },*/    /* first entry is default */
- 	{ "[t]",      tile }, /* double deck */
-
 	{ "[M]",      monocle }, /* All windows on top of each other */
+ 	{ "[t]",      tile }, /* double deck */
 
 	{ "|M|",      centeredmaster }, /* Master in the middle, slaves on the side */
 	{ ">M>",      centeredfloatingmaster }, /* Same but master floats*/
@@ -126,6 +131,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = rofiwindowcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      tabmode,        {-1} },
 	{ MODKEY|ShiftMask,             XK_Tab,    toggleAttachBelow,      {0} },
 	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,      incnmaster,     {.i = -1 } },
@@ -133,10 +139,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,			XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
-	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[8]} }, /* float */
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
+	{ MODKEY,			            XK_q,      killclient,     {0} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} }, /* tile */
+	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[9]} }, /* float */
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
 	{ MODKEY|ShiftMask,             XK_semicolon, togglermaster,      { 0 } }, /* centeredmaster floating*/
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} }, /* spiral */
@@ -190,5 +196,6 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkTabBar,            0,              Button1,        focuswin,       {0} },
 };
 
