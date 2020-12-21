@@ -13,7 +13,7 @@ static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static int attachbelow		    = 1;	/* 1 means attach after the currently active winow */
+static int attachbelow		        = 1;	/* 1 means attach after the currently active winow */
 
 static const char *fonts[]          = { "Fira Code:size=11" };
 static const char dmenufont[]       = "Fira Code:size=11";
