@@ -46,7 +46,7 @@ static const char nordBorderSelected[] = "#5E81AC";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]     = { fore,      back,      nordBorderUnselected   }, // \x0b
-	[SchemeSel]      = { fore,      back,      nordBorderSelected   }, // \x0c
+	[SchemeSel]      = { "#3b4252", "#88c0d0",      nordBorderSelected   }, // \x0c
 };
 
 /* tagging */
