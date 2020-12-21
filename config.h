@@ -14,6 +14,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static int attachbelow		        = 1;	/* 1 means attach after the currently active winow */
+static const int rmaster            = 1;        /* 1 means master-area is initially on the right */
 
 static const char *fonts[]          = { "Fira Code:size=11" };
 static const char dmenufont[]       = "Fira Code:size=11";
@@ -64,7 +65,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	/*{ "[]=",      tile },*/    /* first entry is default */
- 	{ "[3]",      thirds }, /* double deck */
+ 	{ "[t]",      tile }, /* double deck */
 
 	{ "[M]",      monocle }, /* All windows on top of each other */
 
@@ -76,6 +77,8 @@ static const Layout layouts[] = {
 
  	{ "[DD]",     doubledeck }, /* double deck */
  	{ "[|||]",    col }, /* col */
+
+ 	{ "[3]",      thirds }, /* double deck */
 
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -131,15 +134,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,			XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* thirds */
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[8]} }, /* float */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} }, /* monacle */
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[2]} }, /* centeredmaster */
-	/*{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[3]} }, centeredmaster floating*/
+	{ MODKEY|ShiftMask,             XK_semicolon, togglermaster,      { 0 } }, /* centeredmaster floating*/
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} }, /* spiral */
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[5]} }, /* dwindle */
-	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[7]} }, /* tile */
-	{ MODKEY|ShiftMask,             XK_d,      setlayout,      {.v = &layouts[6]} }, /* double decker */
+	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[8]} }, /* thirds */
+	{ MODKEY|ShiftMask,             XK_d,      setlayout,      {.v = &layouts[7]} }, /* cols */
 	{ MODKEY,                       XK_s,	   togglesticky,   {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
