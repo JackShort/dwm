@@ -11,7 +11,7 @@
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 0;        /* 0 means no bar */
+static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static int attachbelow		        = 1;	/* 1 means attach after the currently active winow */
 static const int rmaster            = 1;        /* 1 means master-area is initially on the right */
@@ -46,7 +46,9 @@ static const char nordBorderSelected[] = "#5E81AC";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]     = { fore,      back,      nordBorderUnselected   }, // \x0b
-	[SchemeSel]      = { "#3b4252", "#88c0d0",      nordBorderSelected   }, // \x0c
+	[SchemeSel]      = { "#3b4252", "#88c0d0", nordBorderSelected   }, // \x0c
+	[SchemeNormMon]  = { fore,      back,      nordBorderSelected   }, // \x0c
+	[SchemeSelMon]   = { "#88c0d0", back,      nordBorderSelected   }, // \x0c
 };
 
 /* tagging */
